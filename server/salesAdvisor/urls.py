@@ -16,7 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from app.views import DatabaseCreateUpdateView, SignupView, LoginView, LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/signup/', SignupView.as_view(), name='signup'),
+    path('api/login/', LoginView.as_view(), name='login'),
+    path('api/logout/', LogoutView.as_view(), name='logout'),
+    path('api/database/', DatabaseCreateUpdateView.as_view(), name='database-create-update'),
 ]
