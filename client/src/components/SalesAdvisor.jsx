@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { Container, Box, TextField, Button, List, ListItem, ListItemText, ListItemAvatar, Avatar, Typography, CircularProgress, Link } from '@mui/material';
+import { v4 as uuidv4 } from 'uuid'; // Import uuid
+import { Container, Box, TextField, Button, List, ListItem, ListItemText, ListItemAvatar, Avatar, Typography, CircularProgress } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import { useAuth } from '../AuthContext';
 
@@ -17,7 +18,7 @@ const SalesAdvisor = () => {
         const response = await axios.get('http://localhost:8000/api/chats', {
           headers: { Authorization: `Token ${localStorage.getItem('token')}` },
         });
-        setChats(response.data);
+        setChats(response.data.map(chat => ({ ...chat, id: uuidv4() }))); // Assign unique ID
       } catch (error) {
         if (error.response && error.response.status === 401) {
           logout();
@@ -48,7 +49,8 @@ const SalesAdvisor = () => {
           headers: { Authorization: `Token ${localStorage.getItem('token')}` },
         }
       );
-      setChats([...chats, response.data]);
+
+      setChats(prevChats => [...prevChats, { ...response.data, id: uuidv4() }]); // Add unique ID
       setMessage('');
     } catch (error) {
       console.error('Failed to send message', error);
@@ -61,8 +63,8 @@ const SalesAdvisor = () => {
     <Container>
       <Box sx={{ height: '80vh', overflowY: 'auto', mb: 2, mt: 2 }}>
         <List>
-          {chats.map((chat, index) => (
-            <React.Fragment key={index}>
+          {chats.map((chat) => (
+            <React.Fragment key={chat.id}> {/* Use unique ID */}
               <ListItem>
                 <ListItemAvatar>
                   <Avatar>{/* User icon */}</Avatar>

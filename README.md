@@ -1,6 +1,9 @@
+https://www.loom.com/share/73f6b76d4ffe41a284eae9a23db224f6
 # SalesAdvisor
 
 SalesAdvisor is a comprehensive solution designed to assist sales organizations in managing and analyzing their sales data effectively. The platform offers various features including user management, role-based access control, and insightful analytics to help improve sales performance.
+
+Currently i'm using csv as mock database, but we can also maintain a database of several org's databases which can be queried upon.
 
 ## Features
 
