@@ -40,12 +40,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'app'
+    'corsheaders',
+    'app',
+    'drf_spectacular'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -53,6 +56,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'salesAdvisor.urls'
 
@@ -121,7 +126,9 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'Sales Advisor',
     'DESCRIPTION': 'API for Sales Advisor',
     'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False, 
 }
+
 
 AUTH_USER_MODEL = 'app.User'
 

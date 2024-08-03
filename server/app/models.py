@@ -40,5 +40,15 @@ class User(AbstractUser):
             self.organization = organization
             self.is_admin = True
         super().save(*args, **kwargs)
+
+class Chat(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    message = models.TextField()
+    response = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.timestamp}"
     
     
