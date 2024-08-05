@@ -15,7 +15,7 @@ const SalesAdvisor = () => {
   useEffect(() => {
     const fetchChats = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/chats', {
+        const response = await axios.get('https://utkarsh-fse-mha4s7stfa-uc.a.run.app0/api/chats', {
           headers: { Authorization: `Token ${localStorage.getItem('token')}` },
         });
         setChats(response.data.map(chat => ({ ...chat, id: uuidv4() }))); // Assign unique ID
@@ -43,7 +43,7 @@ const SalesAdvisor = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/query/',
+        'https://utkarsh-fse-mha4s7stfa-uc.a.run.app0/api/query/',
         { question: message },
         {
           headers: { Authorization: `Token ${localStorage.getItem('token')}` },

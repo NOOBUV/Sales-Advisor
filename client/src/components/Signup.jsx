@@ -16,7 +16,7 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/api/signup/', { username, email, password, organization });
+      const response = await axios.post('https://utkarsh-fse-mha4s7stfa-uc.a.run.app0/api/signup/', { username, email, password, organization });
       login(response.data.token);
       navigate('/sales-advisor');
     } catch (error) {

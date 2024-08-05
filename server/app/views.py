@@ -16,8 +16,6 @@ from .utils import chat_with_groq, execute_duckdb_query, get_summarization
 from groq import Groq
 import json, os, sqlparse
 from django.utils.decorators import method_decorator
-from dotenv import load_dotenv
-load_dotenv()
 
 # Signup view
 class SignupView(generics.CreateAPIView):

@@ -13,7 +13,7 @@ const EditDatabase = () => {
     // Fetch current database details
     const fetchDatabaseDetails = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/database/', {
+        const response = await axios.get('https://utkarsh-fse-mha4s7stfa-uc.a.run.app0/api/database/', {
           headers: { Authorization: `Token ${localStorage.getItem('token')}` },
         });
         setDatabaseDetails(response.data);
@@ -35,7 +35,7 @@ const EditDatabase = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put('http://localhost:8000/api/database/', databaseDetails, {
+      await axios.put('https://utkarsh-fse-mha4s7stfa-uc.a.run.app0/api/database/', databaseDetails, {
         headers: { Authorization: `Token ${localStorage.getItem('token')}` },
       });
       alert('Database details updated successfully');
