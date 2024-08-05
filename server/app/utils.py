@@ -1,8 +1,6 @@
 import os
 from groq import Groq
-import json
 import duckdb
-import sqlparse
 import pandas as pd
 
 def chat_with_groq(client, prompt, model, response_format):
