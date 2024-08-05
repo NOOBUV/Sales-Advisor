@@ -14,7 +14,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://utkarsh-fse-mha4s7stfa-uc.a.run.app0/api/login/', { username, password });
+      const response = await axios.post('https://utkarsh-fse-mha4s7stfa-uc.a.run.app/api/login/', { username, password });
       login(response.data.token);
       navigate('/sales-advisor');
     } catch (error) {

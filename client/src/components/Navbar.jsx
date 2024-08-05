@@ -13,7 +13,7 @@ const Navbar = () => {
     const fetchUserDetails = async () => {
       if (isLoggedIn) {
         try {
-          const response = await axios.get('https://utkarsh-fse-mha4s7stfa-uc.a.run.app0/api/user/', {
+          const response = await axios.get('https://utkarsh-fse-mha4s7stfa-uc.a.run.app/api/user/', {
             headers: { Authorization: `Token ${localStorage.getItem('token')}` },
           });
           setIsAdmin(response.data.is_admin);

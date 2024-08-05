@@ -38,16 +38,16 @@ Currently i'm using csv as mock database, but we can also maintain a database of
 
 ### Accessing the Application
 
-- The backend API will be available at [https://utkarsh-fse-mha4s7stfa-uc.a.run.app0](https://utkarsh-fse-mha4s7stfa-uc.a.run.app0)
+- The backend API will be available at [https://utkarsh-fse-mha4s7stfa-uc.a.run.app](https://utkarsh-fse-mha4s7stfa-uc.a.run.app)
 - The frontend will be available at [http://localhost:5713](http://localhost:5713)
 
 ## API Documentation
 
 API documentation is available via DRF Spectacular. Access the following endpoints to view the documentation:
 
-- **Schema**: [https://utkarsh-fse-mha4s7stfa-uc.a.run.app0/api/schema/](https://utkarsh-fse-mha4s7stfa-uc.a.run.app0/api/schema/)
-- **Swagger UI**: [https://utkarsh-fse-mha4s7stfa-uc.a.run.app0/api/schema/swagger-ui/](https://utkarsh-fse-mha4s7stfa-uc.a.run.app0/api/schema/swagger-ui/)
-- **Redoc**: [https://utkarsh-fse-mha4s7stfa-uc.a.run.app0/api/schema/redoc/](https://utkarsh-fse-mha4s7stfa-uc.a.run.app0/api/schema/redoc/)
+- **Schema**: [https://utkarsh-fse-mha4s7stfa-uc.a.run.app/api/schema/](https://utkarsh-fse-mha4s7stfa-uc.a.run.app/api/schema/)
+- **Swagger UI**: [https://utkarsh-fse-mha4s7stfa-uc.a.run.app/api/schema/swagger-ui/](https://utkarsh-fse-mha4s7stfa-uc.a.run.app/api/schema/swagger-ui/)
+- **Redoc**: [https://utkarsh-fse-mha4s7stfa-uc.a.run.app/api/schema/redoc/](https://utkarsh-fse-mha4s7stfa-uc.a.run.app/api/schema/redoc/)
 
 ## Running Tests
 
