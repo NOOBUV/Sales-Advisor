@@ -1,0 +1,35 @@
+steps:
+  # Pull the last successful docker image to use cached layers from
+  # Don't fail if not found (that what exit 0 is for)
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - '-c'
+      - 'docker pull gcr.io/$PROJECT_ID/utkarsh-fse:latest || exit 0'
+    entrypoint: bash
+  # Build using the cached layers to speed things up
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - '--cache-from'
+      - 'gcr.io/$PROJECT_ID/utkarsh-fse:latest'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/utkarsh-fse:$COMMIT_SHA'
+      - .
+  # Push it to gcr
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - 'gcr.io/$PROJECT_ID/utkarsh-fse:$COMMIT_SHA'
+  # Tag as latest - so its used next time
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - tag
+      - 'gcr.io/$PROJECT_ID/utkarsh-fse:$COMMIT_SHA'
+      - 'gcr.io/$PROJECT_ID/utkarsh-fse:latest'
+  # Update Latest in gcr
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - 'gcr.io/$PROJECT_ID/utkarsh-fse:latest'
+options:
+  logging: CLOUD_LOGGING_ONLY
