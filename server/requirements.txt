@@ -1,6 +1,5 @@
 django
 djangorestframework
-psycopg2-binary>=2.9
 gunicorn
 drf-spectacular
 whitenoise
