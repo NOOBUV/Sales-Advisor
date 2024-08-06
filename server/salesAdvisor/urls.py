@@ -27,7 +27,6 @@ urlpatterns = [
     path('api/signup/', SignupView.as_view(), name='signup'),
     path('api/login/', LoginView.as_view(), name='login'),
     path('api/logout/', LogoutView.as_view(), name='logout'),
-    path('api/database/', DatabaseCreateUpdateView.as_view(), name='database-create-update'),
     path('api/query/', QueryView.as_view(), name='query'),
     path('api/chats/', ChatViewSet.as_view({'get': 'list'}), name='chat-list'),
     path('api/user/', UserDetailsView.as_view(), name='user_details'),
@@ -35,6 +34,7 @@ urlpatterns = [
     path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
     path('', TemplateView.as_view(template_name='index.html'), name='index'),
+    # path('api/database/', DatabaseCreateUpdateView.as_view(), name='database-create-update'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

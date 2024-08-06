@@ -2,10 +2,8 @@ from rest_framework import generics, status, viewsets
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
-from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
-from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
 from drf_spectacular.utils import extend_schema, OpenApiParameter
@@ -90,7 +88,7 @@ class LoginView(generics.GenericAPIView):
             token, created = Token.objects.get_or_create(user=user)
             return Response({
                 'token': token.key,
-                'is_admin': user.is_admin  # Include the is_admin status
+                'is_admin': user.is_admin
             }, status=status.HTTP_200_OK)
 
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -106,44 +104,6 @@ class LogoutView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         request.user.auth_token.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-# Database create/update view
-class DatabaseCreateUpdateView(generics.CreateAPIView, generics.UpdateAPIView):
-    permission_classes = [IsAuthenticated]
-    serializer_class = DatabaseSerializer
-
-    @extend_schema(
-        request=DatabaseSerializer,
-        responses={status.HTTP_201_CREATED: DatabaseSerializer, status.HTTP_200_OK: DatabaseSerializer},
-        summary='Create or update a database',
-        description='Allows an admin user to create or update a database associated with their organization.'
-    )
-    def get_queryset(self):
-        # Only allow access to databases associated with the user's organization
-        return Database.objects.filter(organization=self.request.user.organization)
-
-    def perform_create(self, serializer):
-        # Ensure the user is an admin before creating a database
-        if self.request.user.is_admin:
-            # Check if organization pk is provided in the request data
-            org_pk = self.request.data.get('organization')
-            if org_pk is None:
-                # If not provided, use the user's organization
-                organization = self.request.user.organization
-            else:
-                # If provided, fetch the organization by pk
-                organization = Organization.objects.get(pk=org_pk)
-
-            serializer.save(organization=organization)
-        else:
-            raise PermissionDenied("You do not have permission to create a database.")
-
-    def perform_update(self, serializer):
-        # Ensure the user is an admin before updating a database
-        if self.request.user.is_admin:
-            serializer.save()
-        else:
-            raise PermissionDenied("You do not have permission to update this database.")
 
 @method_decorator(csrf_exempt, name='dispatch')
 class QueryView(generics.CreateAPIView):
@@ -177,6 +137,7 @@ class QueryView(generics.CreateAPIView):
         summary='Query the database',
         description='Submit a question to be processed and generate a SQL query. The response includes the summarized results based on the query.'
     )
+
     def create(self, request, *args, **kwargs):
         data = json.loads(request.body.decode('utf-8'))
         user_question = data.get('question')
@@ -185,7 +146,7 @@ class QueryView(generics.CreateAPIView):
             return JsonResponse({'error': 'No question provided'}, status=400)
 
         # Load the base prompt
-        with open('./app/base_prompt.txt', 'r') as file:
+        with open('./app/templates/prompts/base_prompt.txt', 'r') as file:
             base_prompt = file.read()
 
         # Generate the full prompt for the AI
@@ -218,7 +179,6 @@ class QueryView(generics.CreateAPIView):
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
 
-            # Return only the question and summary
             response = {
                 'question': user_question,
                 'summary': summarization
@@ -276,3 +236,43 @@ class UserDetailsView(APIView):
             'username': request.user.username,
             'is_admin': request.user.is_admin
         })
+
+
+# # To Do: Have to implement this functionality in future where user will be able to connect the sql db
+# # Database create/update view
+# class DatabaseCreateUpdateView(generics.CreateAPIView, generics.UpdateAPIView):
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = DatabaseSerializer
+
+#     @extend_schema(
+#         request=DatabaseSerializer,
+#         responses={status.HTTP_201_CREATED: DatabaseSerializer, status.HTTP_200_OK: DatabaseSerializer},
+#         summary='Create or update a database',
+#         description='Allows an admin user to create or update a database associated with their organization.'
+#     )
+#     def get_queryset(self):
+#         # Only allow access to databases associated with the user's organization
+#         return Database.objects.filter(organization=self.request.user.organization)
+
+#     def perform_create(self, serializer):
+#         # Ensure the user is an admin before creating a database
+#         if self.request.user.is_admin:
+#             # Check if organization pk is provided in the request data
+#             org_pk = self.request.data.get('organization')
+#             if org_pk is None:
+#                 # If not provided, use the user's organization
+#                 organization = self.request.user.organization
+#             else:
+#                 # If provided, fetch the organization by pk
+#                 organization = Organization.objects.get(pk=org_pk)
+
+#             serializer.save(organization=organization)
+#         else:
+#             raise PermissionDenied("You do not have permission to create a database.")
+
+#     def perform_update(self, serializer):
+#         # Ensure the user is an admin before updating a database
+#         if self.request.user.is_admin:
+#             serializer.save()
+#         else:
+#             raise PermissionDenied("You do not have permission to update this database.")
