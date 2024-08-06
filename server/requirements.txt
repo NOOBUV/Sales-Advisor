@@ -9,3 +9,4 @@ groq
 duckdb
 pandas
 python-dotenv
+psycopg2-binary
