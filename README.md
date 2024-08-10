@@ -10,7 +10,6 @@ Currently i'm using csv as mock database, but we can also maintain a database of
 - User Registration and Login with Google Single Sign-On
 - Role-Based Access Control
 - Sales Data Querying and Analytics
-- Automated Product Description Generation using Celery and LLM
 - API Documentation with DRF Spectacular
 
 
@@ -38,21 +37,19 @@ Currently i'm using csv as mock database, but we can also maintain a database of
 
 ### Accessing the Application
 
-- The backend API will be available at [https://utkarsh-fse-mha4s7stfa-uc.a.run.app](https://utkarsh-fse-mha4s7stfa-uc.a.run.app)
+- Whole application is packaged using whitenoise so if you run docker (backend and frontend will be served on port 8000)
+- The backend API will be available at [https://localhost:8000/api](https://localhost:8000/api)
 - The frontend will be available at [http://localhost:5713](http://localhost:5713)
 
 ## API Documentation
 
 API documentation is available via DRF Spectacular. Access the following endpoints to view the documentation:
 
-- **Schema**: [https://utkarsh-fse-mha4s7stfa-uc.a.run.app/api/schema/](https://utkarsh-fse-mha4s7stfa-uc.a.run.app/api/schema/)
-- **Swagger UI**: [https://utkarsh-fse-mha4s7stfa-uc.a.run.app/api/schema/swagger-ui/](https://utkarsh-fse-mha4s7stfa-uc.a.run.app/api/schema/swagger-ui/)
-- **Redoc**: [https://utkarsh-fse-mha4s7stfa-uc.a.run.app/api/schema/redoc/](https://utkarsh-fse-mha4s7stfa-uc.a.run.app/api/schema/redoc/)
+- **Schema**: [https://localhost:8000/api/schema](https://localhost:8000/api/schema)
+- **Swagger UI**: [https://localhost:8000/api/swagger-ui](https://localhost:8000/api/swagger-ui)
+- **Redoc**: [https://localhost:8000/api/redoc](https://localhost:8000/api/redoc)
 
 ## Running Tests
 
-To run the backend tests, use the following command inside the backend container:
+To run the backend tests, use the following command inside the server container:
 
-```bash
-docker-compose exec backend python manage.py test
-docker-compose exec frontend npm test
